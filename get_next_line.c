@@ -22,7 +22,8 @@ static int	get_buf(int const fd, char **lines, char **res)
 
 	while ((red = read(fd, buf, BUFF_SIZE)))
 	{
-
+		if (red == -1)
+			return (-1);
 		buf[red] = '\0';
 		if (!ft_strchr(buf, '\n'))
 			*lines = ft_strfjoin(*lines, buf, 1);
