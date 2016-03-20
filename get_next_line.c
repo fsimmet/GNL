@@ -16,7 +16,7 @@
 static int	get_buf(int const fd, char **lines, char **res)
 {
 	ssize_t		red;
-	char		buf[BUFF_SIZE + 1];
+	char		buf[BUFF_SIZE];
 	int			i;
 	char		*tmp;
 
@@ -33,7 +33,7 @@ static int	get_buf(int const fd, char **lines, char **res)
 			while (buf[i] != '\0' && buf[i] != '\n')
 				*lines = ft_strfjoin(*lines, ft_chartostar(buf[i++]), 3);
 			tmp = ft_strchr(buf, '\n');
-			*res = ft_strdup(&tmp[1]);
+			res[fd] = ft_strdup(&tmp[1]);
 			return (1);
 		}
 	}
@@ -43,26 +43,26 @@ static int	get_buf(int const fd, char **lines, char **res)
 int			get_next_line(int const fd, char **line)
 {
 	size_t		i;
-	static char	*res;
+	static char	*res[FDMAX];
 	char		*tmp;
 
-	if (fd < 0 || line == NULL || BUFF_SIZE <= 0)
+	if (fd < 0 || fd > FDMAX || line == NULL || BUFF_SIZE <= 0)
 		return (-1);
 	if (*line)
 		*line = NULL;
-	if (res && res[0])
+	if (res[fd] && res[fd][0])
 	{
 		i = 0;
-		while (res[i] && res[i] != '\n')
-			*line = ft_strfjoin(*line, ft_chartostar(res[i++]), 3);
-		if (ft_strchr(res, '\n'))
+		while (res[fd][i] && res[fd][i] != '\n')
+			*line = ft_strfjoin(*line, ft_chartostar(res[fd][i++]), 3);
+		if ((tmp = ft_strchr(&res[fd][i], '\n')))
 		{
-			tmp = ft_strchr(&res[i], '\n');
-			res = ft_strdup(&tmp[1]);
+			tmp = ft_strchr(&res[fd][i], '\n');
+			res[fd] = ft_strdup(&tmp[1]);
 			return (1);
 		}
 		else
-			ft_strclr(res);
+			res[fd] = NULL;
 	}
-	return (get_buf(fd, line, &res));
+	return (get_buf(fd, line, res));
 }
