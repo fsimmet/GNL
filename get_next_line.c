@@ -31,33 +31,20 @@ static int	get_buf(int const fd, char **lines, char **res)
 		{
 			i = 0;
 			while (buf[i] != '\0' && buf[i] != '\n')
-			{
-				*lines = ft_strfjoin(*lines, ft_chartostar(buf[i++]), 2);
-			}
+				*lines = ft_strfjoin(*lines, ft_chartostar(buf[i++]), 3);
 			tmp = ft_strchr(buf, '\n');
 			*res = ft_strdup(&tmp[1]);
 			return (1);
 		}
 	}
-	if (*res && *res[0] == '\0')
-	{
-		ft_strdel(res);
-		// if (ft_strcmp(*lines, ""))
-		// 	return (0);
-		return (1);
-	}
-	if (*lines)
-		return (1);
-	else
-		return (red);
+	return ((*lines) ? 1 : red);
 }
 
 int			get_next_line(int const fd, char **line)
 {
 	size_t		i;
-	static char	*res = NULL;
+	static char	*res;
 	char		*tmp;
-
 
 	if (fd < 0 || line == NULL || BUFF_SIZE <= 0)
 		return (-1);
@@ -67,7 +54,7 @@ int			get_next_line(int const fd, char **line)
 	{
 		i = 0;
 		while (res[i] && res[i] != '\n')
-			*line = ft_strfjoin(*line, ft_chartostar(res[i++]), 2);
+			*line = ft_strfjoin(*line, ft_chartostar(res[i++]), 3);
 		if (ft_strchr(res, '\n'))
 		{
 			tmp = ft_strchr(&res[i], '\n');
@@ -78,8 +65,4 @@ int			get_next_line(int const fd, char **line)
 			ft_strclr(res);
 	}
 	return (get_buf(fd, line, &res));
-
-	//if (get_buf(fd, line, &res) == 0 && !res)
-	//	return (0);
-	//return (0);
 }

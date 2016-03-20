@@ -6,7 +6,7 @@
 #    By: fsimmet <fsimmet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/27 10:37:11 by fsimmet           #+#    #+#              #
-#    Updated: 2016/02/16 10:10:43 by fsimmet          ###   ########.fr        #
+#    Updated: 2016/03/20 18:57:41 by fsimmet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,13 +81,14 @@ SRC += ft_swap.c
 SRCO = $(SRC:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+HEADER = includes
 
 all: $(NAME)
 
 re: fclean all
 
 .c.o:
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $< -I $(HEADER)
 
 $(NAME): $(SRCO)
 	ar rc $@ $^
