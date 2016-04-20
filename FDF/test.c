@@ -6,52 +6,14 @@
 /*   By: fsimmet <fsimmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/15 13:04:33 by fsimmet           #+#    #+#             */
-/*   Updated: 2016/04/18 15:21:47 by fsimmet          ###   ########.fr       */
+/*   Updated: 2016/04/20 16:01:19 by fsimmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <stdio.h>
 #include <mlx.h>
 #include <stdlib.h>
-
-
-typedef struct		s_img {
-
-	void			*ptr;
-	char			*data;
-
-	int				bpp; // byte per pixel
-	int				sl; // line_size
-	int				endian;
-
-	int				width;
-	int				height;
-
-}					t_img;
-
-typedef struct		s_env
-{
-	void			*mlx;
-	void			*win;
-	t_img			img;
-
-}					t_env;
-
-typedef struct		s_pos {
-
-	int		x;
-	int		y;
-
-}					t_pos;
-
-typedef struct		s_color {
-
-	char			r;
-	char			g;
-	char			b;
-
-}					t_color;
+#include "fdf.h"
 
 void	put_pixel_img(void *mlx, t_img *img, t_pos const *pos, t_color const *c)
 {
@@ -76,6 +38,7 @@ int	expose_hook(t_env *e)
 
 int	key_hook(int keycode, t_env *e)
 {
+	e = NULL;
 	if (keycode == 53)
 		exit(0);
 	return(0);
@@ -109,18 +72,16 @@ int	loop_hook(t_env *e)
 	return (0);
 }
 
-int	main(int ac, char **av)
+int	main(void)
 {
 	t_env		e;
-	t_color		color;
-	t_pos		pos;
 
 	e.mlx = mlx_init();
 	e.win = mlx_new_window(e.mlx, 400, 400, "test");
-	e.img.width = 400;
-	e.img.height = 400;
-	e.img.ptr = mlx_new_image(e.mlx, e.img.width, e.img.height);
-	e.img.data = mlx_get_data_addr(e.img.ptr, &e.img.bpp, &e.img.sl, &e.img.endian);
+	e.img.wth = 400;
+	e.img.hht = 400;
+	e.img.ptr = mlx_new_image(e.mlx, e.img.wth, e.img.hht);
+	e.img.data = mlx_get_data_addr(e.img.ptr, &e.img.bpp, &e.img.sl, &e.img.end);
 	mlx_expose_hook(e.win, expose_hook, &e);
 	mlx_key_hook(e.win, key_hook, &e);
 	mlx_loop_hook(e.mlx, loop_hook, &e);

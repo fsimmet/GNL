@@ -6,16 +6,16 @@
 #    By: fsimmet <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/14 11:19:56 by fsimmet           #+#    #+#              #
-#    Updated: 2016/04/14 11:24:25 by fsimmet          ###   ########.fr        #
+#    Updated: 2016/04/20 16:04:38 by fsimmet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
-SRC =
+SRC = test.c
 SRCO = $(SRC:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-HEADER = includes
+HEADER = header
 
 all : $(NAME)
 
@@ -25,8 +25,7 @@ re : fclean all
 	$(CC) $(CFLAGS) -o $@ -c $< -I $(HEADER)
 
 $(NAME): $(SRCO)
-	ar rc $@ $^
-	ranlib $@
+	$(CC) $(CFLAGS) -o $@ $^ -lmlx -framework Appkit -framework OpenGL
 
 clean:
 	rm -rf $(SRCO)
