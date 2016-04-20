@@ -6,7 +6,7 @@
 /*   By: fsimmet <fsimmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/15 13:04:33 by fsimmet           #+#    #+#             */
-/*   Updated: 2016/04/15 17:57:29 by fsimmet          ###   ########.fr       */
+/*   Updated: 2016/04/18 15:21:47 by fsimmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	draw(t_env *e)
 		pos.x = 150;
 		while (pos.x < 250)
 		{
-			color.r = 0xFF;
+			color.r = 0x00;
 			color.g = 0x00;
 			color.b = 0xFF;
 			put_pixel_img(e->mlx, &e->img, &pos, &color);
