@@ -6,12 +6,13 @@
 #    By: fsimmet <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/14 11:19:56 by fsimmet           #+#    #+#              #
-#    Updated: 2016/04/20 16:04:38 by fsimmet          ###   ########.fr        #
+#    Updated: 2016/04/20 16:18:58 by fsimmet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 SRC = test.c
+SRC += fdf.c
 SRCO = $(SRC:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
@@ -25,9 +26,11 @@ re : fclean all
 	$(CC) $(CFLAGS) -o $@ -c $< -I $(HEADER)
 
 $(NAME): $(SRCO)
-	$(CC) $(CFLAGS) -o $@ $^ -lmlx -framework Appkit -framework OpenGL
+	make -C libft
+	$(CC) $(CFLAGS) -o $@ libft/libft.a $^ -lmlx -framework Appkit -framework OpenGL
 
 clean:
+	make clean -C libft
 	rm -rf $(SRCO)
 
 fclean: clean

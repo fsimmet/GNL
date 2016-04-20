@@ -6,7 +6,7 @@
 /*   By: fsimmet <fsimmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/15 13:04:33 by fsimmet           #+#    #+#             */
-/*   Updated: 2016/04/20 16:01:19 by fsimmet          ###   ########.fr       */
+/*   Updated: 2016/04/20 16:42:59 by fsimmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	key_hook(int keycode, t_env *e)
 	e = NULL;
 	if (keycode == 53)
 		exit(0);
-	return(0);
+	return (0);
 }
 
 void	draw(t_env *e)
@@ -67,7 +67,7 @@ void	draw(t_env *e)
 
 int	loop_hook(t_env *e)
 {
-	draw(e); // redessine
+	draw(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img.ptr, 0, 0);
 	return (0);
 }
