@@ -6,11 +6,24 @@
 /*   By: fsimmet <fsimmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/27 12:43:24 by fsimmet           #+#    #+#             */
-/*   Updated: 2016/06/04 21:01:53 by fsimmet          ###   ########.fr       */
+/*   Updated: 2016/06/13 18:32:16 by fsimmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+static void		get_bufn(char **lines, t_fd *current, char *buf)
+{
+	size_t	i;
+
+	i = 0;
+	if (buf[i] == '\n')
+	{
+		buf[i] = '\0';
+		*lines = ft_strfjoin(*lines, ft_chartostar(buf[i]), 3);
+		current->res = ft_strdup(&(ft_strchr(buf, '\0'))[1]);
+	}
+}
 
 static int		get_buf(int const fd, char **lines, t_fd *current)
 {
@@ -28,13 +41,8 @@ static int		get_buf(int const fd, char **lines, t_fd *current)
 		else
 		{
 			i = 0;
-			if (buf[i] == '\n')
-			{
-				buf[i] = '\0';
-				*lines = ft_strfjoin(*lines, ft_chartostar(buf[i]), 3);
-				current->res = ft_strdup(&(ft_strchr(buf, '\0'))[1]);
-				return (1);
-			}
+			get_bufn(lines, current, buf);
+			return (1);
 			while (buf[i] != '\0' && buf[i] != '\n')
 				*lines = ft_strfjoin(*lines, ft_chartostar(buf[i++]), 3);
 			current->res = ft_strdup(&(ft_strchr(buf, '\n'))[1]);
