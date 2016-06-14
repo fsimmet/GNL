@@ -6,7 +6,7 @@
 /*   By: fsimmet <fsimmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/15 13:04:33 by fsimmet           #+#    #+#             */
-/*   Updated: 2016/04/20 16:42:59 by fsimmet          ###   ########.fr       */
+/*   Updated: 2016/04/20 16:45:42 by fsimmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,13 @@ void	put_pixel_img(void *mlx, t_img *img, t_pos const *pos, t_color const *c)
 
 int	expose_hook(t_env *e)
 {
-	printf("expose hook\n");
+//	printf("expose hook\n");
 	mlx_put_image_to_window(e->mlx, e->win, e->img.ptr, 0, 0);
 	return (0);
 }
 
-int	key_hook(int keycode, t_env *e)
+int	key_hook(int keycode)
 {
-	e = NULL;
 	if (keycode == 53)
 		exit(0);
 	return (0);

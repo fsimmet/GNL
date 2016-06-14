@@ -6,13 +6,13 @@
 /*   By: fsimmet <fsimmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/27 12:43:24 by fsimmet           #+#    #+#             */
-/*   Updated: 2016/06/13 18:32:16 by fsimmet          ###   ########.fr       */
+/*   Updated: 2016/06/14 15:21:13 by fsimmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static void		get_bufn(char **lines, t_fd *current, char *buf)
+static int		get_bufn(char **lines, t_fd *current, char *buf)
 {
 	size_t	i;
 
@@ -22,7 +22,9 @@ static void		get_bufn(char **lines, t_fd *current, char *buf)
 		buf[i] = '\0';
 		*lines = ft_strfjoin(*lines, ft_chartostar(buf[i]), 3);
 		current->res = ft_strdup(&(ft_strchr(buf, '\0'))[1]);
+		return (1);
 	}
+	return (0);
 }
 
 static int		get_buf(int const fd, char **lines, t_fd *current)
@@ -36,18 +38,20 @@ static int		get_buf(int const fd, char **lines, t_fd *current)
 		if (red == -1)
 			return (-1);
 		buf[red] = '\0';
-		if (!ft_strchr(buf, '\n'))
-			*lines = ft_strfjoin(*lines, buf, 1);
-		else
+		if (ft_strchr(buf, '\n'))
 		{
 			i = 0;
-			get_bufn(lines, current, buf);
-			return (1);
+			if (get_bufn(lines, current, buf) == 1)
+				return (1);
 			while (buf[i] != '\0' && buf[i] != '\n')
-				*lines = ft_strfjoin(*lines, ft_chartostar(buf[i++]), 3);
+			{
+				*lines = ft_strfjoin(*lines, ft_chartostar(buf[i]), 3);
+				i++;
+			}
 			current->res = ft_strdup(&(ft_strchr(buf, '\n'))[1]);
 			return (1);
 		}
+		*lines = ft_strfjoin(*lines, buf, 1);
 	}
 	return ((*lines != NULL) ? 1 : red);
 }
@@ -61,9 +65,7 @@ static t_fd		*get_current_fd(int const fd, t_list **fds)
 	while (tmp != NULL)
 	{
 		if (((t_fd *)tmp->content)->fd == fd)
-		{
 			return (tmp->content);
-		}
 		tmp = tmp->next;
 	}
 	content.fd = fd;
